@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Falaí: WhatsApp Voice Transcriber",
+  "version": "0.1.0",
+  "description": "Transcribe WhatsApp Web voice messages locally with Whisper on WebGPU.",
+  "minimum_chrome_version": "121",
+  "permissions": ["offscreen", "storage", "unlimitedStorage"],
+  "host_permissions": ["https://huggingface.co/*", "https://*.hf.co/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Falaí settings"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["page-hook.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

@@ -1,0 +1,76 @@
+.falai-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  align-self: center;
+  width: 32px;
+  height: 32px;
+  /* WhatsApp's play button sits in a wide box; pull in so the gap on each side is even. */
+  margin: 0 6px 0 -10px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--icon, #8696a0);
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.falai-btn:hover:not(:disabled) {
+  background: rgba(134, 150, 160, 0.18);
+}
+
+.falai-btn:disabled {
+  cursor: progress;
+}
+
+.falai-btn.falai-done {
+  color: var(--teal, #00a884);
+}
+
+.falai-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: falai-spin 0.8s linear infinite;
+}
+
+@keyframes falai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.falai-transcript {
+  /* Clear the voice note duration above and the message timestamp below. */
+  margin: 22px 4px 20px;
+  padding: 6px 8px;
+  border-left: 3px solid var(--teal, #00a884);
+  border-radius: 4px;
+  background: rgba(134, 150, 160, 0.1);
+  font-size: 13.5px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.falai-transcript[hidden] {
+  display: none;
+}
+
+.falai-transcript.falai-muted {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.falai-transcript.falai-error {
+  border-left-color: #ea0038;
+}
