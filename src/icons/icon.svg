@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Neobrutalist tile: hard shadow, thick border, flat yellow. -->
+  <rect x="16" y="16" width="106" height="106" rx="22" fill="#111" />
+  <rect x="6" y="6" width="106" height="106" rx="22" fill="#ffd23f" stroke="#111" stroke-width="7" />
+  <!-- Same glyph as the in-chat button: text lines + sound bars. -->
+  <path
+    transform="translate(20.6 16.6) scale(3.2)"
+    d="M3 6h18M3 11h12M3 16h7M15 16v2M18 13.5v7M21 15.5v3"
+    fill="none"
+    stroke="#111"
+    stroke-width="2.6"
+    stroke-linecap="round"
+  />
+</svg>

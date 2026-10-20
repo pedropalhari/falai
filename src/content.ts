@@ -70,6 +70,7 @@ function render(dataId: string) {
   switch (state?.status) {
     case undefined:
       panel.hidden = true;
+      keepTopSpacing(msg!, btn, panel);
       return;
     case "capturing":
       panel.textContent = "Grabbing audio…";
@@ -89,6 +90,7 @@ function render(dataId: string) {
     case "done":
       panel.textContent = state.text || "(no speech detected)";
       panel.hidden = state.hidden;
+      keepTopSpacing(msg!, btn, panel);
       return;
     case "error":
       panel.textContent = `Transcription failed: ${state.error}`;
@@ -96,6 +98,26 @@ function render(dataId: string) {
       break;
   }
   panel.hidden = false;
+  keepTopSpacing(msg!, btn, panel);
+}
+
+function topOffset(msg: HTMLElement, btn: HTMLElement) {
+  return btn.getBoundingClientRect().top - msg.getBoundingClientRect().top;
+}
+
+// The player row is vertically centered in the bubble, so a taller bubble eats
+// its top spacing. Pad the row back to where it sat with the transcript closed.
+function keepTopSpacing(
+  msg: HTMLElement,
+  btn: HTMLElement,
+  panel: HTMLElement,
+) {
+  const row = panel.previousElementSibling as HTMLElement | null;
+  if (!row) return;
+  row.style.paddingTop = "";
+  if (panel.hidden) return;
+  const drift = Number(panel.dataset.closedOffset) - topOffset(msg, btn);
+  if (drift > 0) row.style.paddingTop = `${drift}px`;
 }
 
 function setState(dataId: string, state: State) {
@@ -307,6 +329,7 @@ function inject(icon: Element) {
   panel.className = "falai-transcript";
   panel.hidden = true;
   player.parentElement.insertAdjacentElement("afterend", panel);
+  panel.dataset.closedOffset = String(topOffset(msg, btn));
 
   render(dataId);
   if (!states.has(dataId)) restoreSaved(dataId);

@@ -41,6 +41,10 @@ async function build() {
   }
 
   await Promise.all(STATIC.map((f) => cp(join(SRC, f), join(OUT, f))));
+  await cp(join(SRC, "icons"), join(OUT, "icons"), {
+    recursive: true,
+    filter: (f) => !f.endsWith(".svg"),
+  });
 
   // MV3 can't load remote code, so ship the ONNX Runtime WebGPU wasm binary.
   const ortDist = dirname(
