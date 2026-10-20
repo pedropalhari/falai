@@ -25,14 +25,25 @@ async function screenshot(
 
 // ---------- icons ----------
 
-const iconPage = join(tmp, "icon.html");
-await Bun.write(
-  iconPage,
-  `<body style="margin:0;background:transparent"><img src="file://${join(ICONS, "icon.svg")}" width="128" height="128" style="display:block"></body>`,
-);
-const big = join(tmp, "icon-512.png");
-await screenshot(iconPage, big, [128, 128], 4);
-for (const size of [16, 32, 48, 128]) {
+// Toolbar sizes use a full-bleed variant; the shadowed tile would look smaller
+// than other extensions' icons there.
+const ICON_SOURCES: Record<number, string> = {
+  16: "icon-toolbar.svg",
+  32: "icon-toolbar.svg",
+  48: "icon.svg",
+  128: "icon.svg",
+};
+
+for (const [size, svg] of Object.entries(ICON_SOURCES)) {
+  const page = join(tmp, `${svg}.html`);
+  const big = join(tmp, `${svg}-512.png`);
+  if (!(await Bun.file(big).exists())) {
+    await Bun.write(
+      page,
+      `<body style="margin:0;background:transparent"><img src="file://${join(ICONS, svg)}" width="128" height="128" style="display:block"></body>`,
+    );
+    await screenshot(page, big, [128, 128], 4);
+  }
   await $`sips -z ${size} ${size} ${big} --out ${join(ICONS, `icon-${size}.png`)}`.quiet();
 }
 console.log("icons → src/icons/");
