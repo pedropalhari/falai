@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <!-- Toolbar variant (16/32 px): full-bleed tile, no shadow, so it matches other extensions' size. -->
-  <rect x="4" y="4" width="120" height="120" rx="26" fill="#ffd23f" stroke="#111" stroke-width="8" />
+  <!-- Toolbar variant (16/32 px): full-bleed yellow, no shadow or border. A black
+       border vanishes on Chrome's dark toolbar and makes the icon look smaller. -->
+  <rect width="128" height="128" rx="20" fill="#ffd23f" />
   <path
     transform="translate(11.2 10.1) scale(4.4)"
     d="M3 5h18M3 11h18M3 17h8M16 14.5v5M20.5 16v2"

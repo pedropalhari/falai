@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "simple-git-hooks",
-    "render": "bun run build && bun run scripts/render-assets.ts"
+    "render": "bun run build && bun run scripts/render-assets.ts && bun run build"
   },
   "devDependencies": {
     "@types/bun": "latest",
